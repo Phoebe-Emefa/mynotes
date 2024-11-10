@@ -56,13 +56,18 @@ class _LoginViewState extends State<LoginView> {
                   email: email,
                   password: password,
                 );
-                print(userCredential);
+                if (context.mounted) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/notes/',
+                    (_) => false,
+                  );
+                }
               } on FirebaseAuthException catch (e) {
                 if (e.code == "invalid-credential") {
-                  print("You entered wrong credentials");
+                  debugPrint("You entered wrong credentials");
                 } else {
-                  print("Something else happenned");
-                  print(e.code);
+                  debugPrint("Something else happenned");
+                  debugPrint(e.code);
                 }
               }
             },
